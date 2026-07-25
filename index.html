@@ -8,448 +8,477 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #1a1412;
-      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #0d0a08;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       overflow: hidden;
-      cursor: default;
+      user-select: none;
     }
 
-    .particles {
+    /* Ambient glow */
+    .ambient {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .particle {
-      position: absolute;
-      background: rgba(139,69,19,0.3);
+      width: 600px;
+      height: 600px;
       border-radius: 50%;
-      animation: float 8s infinite;
+      background: radial-gradient(circle, rgba(139,69,19,0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: ambientPulse 3s ease-in-out infinite;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
-      20% { opacity: 0.3; }
-      50% { transform: translateY(-40px) scale(1.5); opacity: 0; }
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
     }
 
     .container {
       text-align: center;
-      position: relative;
       z-index: 1;
+      max-width: 600px;
     }
 
-    .title-block {
-      margin-bottom: 1.5rem;
+    /* Hero text */
+    .hero-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: #8b6914;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      animation: fadeUp 1s ease-out;
     }
 
-    .title {
-      font-size: 2.8rem;
-      font-weight: bold;
-      color: #e8c9a0;
-      text-shadow: 0 0 40px rgba(139,69,19,0.5);
-      letter-spacing: 0.05em;
-      animation: fadeIn 1s ease-in;
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #f0d9a0;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 1.2s ease-out;
     }
 
-    .title-accent {
-      font-size: 1rem;
+    .hero-subtitle {
+      font-size: 1.2rem;
       color: #c4956a;
       font-style: italic;
-      margin-top: 0.3rem;
-      letter-spacing: 0.15em;
-      animation: fadeIn 1.5s ease-in;
+      margin-bottom: 3rem;
+      animation: fadeUp 1.5s ease-out;
     }
 
-    .matus-quote {
-      font-size: 1.1rem;
-      color: #8b6914;
-      margin-top: 0.5rem;
-      animation: fadeIn 2s ease-in;
-      font-style: italic;
-    }
-
-    .matus-quote em {
+    .hero-subtitle strong {
       color: #daa520;
-      font-style: normal;
     }
 
-    .canvas-wrapper {
+    /* Scene */
+    .scene {
       position: relative;
-      width: 400px;
-      height: 420px;
-      margin: 0 auto;
-      animation: fadeIn 2.5s ease-in;
+      width: 500px;
+      height: 380px;
+      margin: 0 auto 2rem;
+      animation: fadeUp 2s ease-out;
     }
 
-    /* Body silhouette */
-    .body-silhouette {
+    /* Torso */
+    .torso {
       position: absolute;
-      bottom: 0;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
-      height: 300px;
-      background: linear-gradient(to top, rgba(139,69,19,0.08) 0%, transparent 100%);
-      border: 2px solid rgba(139,69,19,0.25);
-      border-radius: 65px 65px 0 0;
-      box-shadow: inset 0 -40px 40px rgba(139,69,19,0.05);
+      width: 160px;
+      height: 260px;
+      background: linear-gradient(
+        to bottom,
+        rgba(180,140,110,0.15) 0%,
+        rgba(180,140,110,0.1) 40%,
+        rgba(180,140,110,0.05) 100%
+      );
+      border: 2px solid rgba(180,140,110,0.2);
+      border-radius: 90px 90px 20px 20px;
     }
 
-    .body-head {
+    .torso-lines {
       position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 55px;
-      height: 60px;
-      border: 2px solid rgba(139,69,19,0.2);
-      border-radius: 50%;
-      opacity: 0.5;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent calc(50% - 1px), rgba(180,140,110,0.1) calc(50% - 1px), rgba(180,140,110,0.1) calc(50% + 1px), transparent calc(50% + 1px));
+      border-radius: inherit;
     }
 
-    /* Abdominal cavity — glowing */
-    .cavity-glow {
+    /* Pelvis area */
+    .pelvis {
       position: absolute;
-      bottom: 65px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       width: 100px;
-      height: 55px;
-      background: radial-gradient(ellipse, rgba(139,69,19,0.25) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: cavityPulse 2s ease-in-out infinite;
-      z-index: 3;
+      height: 70px;
+      border: 2px solid rgba(180,140,110,0.15);
+      border-radius: 0 0 40px 40px;
+      border-top: none;
     }
 
-    @keyframes cavityPulse {
-      0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
-      50% { opacity: 0.8; transform: translateX(-50%) scale(1.08); }
-    }
-
-    .cavity {
+    /* Cavity - the destination */
+    .cavity-zone {
       position: absolute;
-      bottom: 65px;
+      bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
-      width: 85px;
-      height: 45px;
-      background: radial-gradient(ellipse at 50% 60%, #1a0a05 0%, #0d0402 70%, #000 100%);
-      border-radius: 50%;
-      border: 1px solid rgba(139,69,19,0.4);
-      box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 0 30px rgba(139,69,19,0.2);
-      z-index: 6;
-      transition: box-shadow 0.3s;
+      width: 90px;
+      height: 50px;
     }
 
-    .cavity.active {
-      box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 0 45px rgba(139,69,19,0.5);
+    .cavity-hole {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, #000 30%, #0a0503 60%, rgba(139,69,19,0.3) 100%);
+      border-radius: 50%;
+      border: 2px solid rgba(139,69,19,0.5);
+      box-shadow:
+        inset 0 0 30px #000,
+        0 0 30px rgba(139,69,19,0.3),
+        0 0 60px rgba(0,0,0,0.5);
+      animation: cavityGlow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes cavityGlow {
+      0%, 100% { box-shadow: inset 0 0 30px #000, 0 0 20px rgba(139,69,19,0.2); }
+      50% { box-shadow: inset 0 0 30px #000, 0 0 40px rgba(139,69,19,0.5); }
     }
 
     .cavity-label {
       position: absolute;
-      top: -28px;
+      top: -22px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.6rem;
-      color: rgba(139,69,19,0.8);
+      font-size: 0.55rem;
+      color: rgba(218,165,32,0.7);
       letter-spacing: 0.2em;
       white-space: nowrap;
       text-transform: uppercase;
     }
 
-    /* Scrotum */
-    .scrotum {
+    /* Scrotum sack */
+    .sack {
       position: absolute;
-      bottom: 8px;
+      bottom: 35px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
+      width: 120px;
       height: 55px;
       background: radial-gradient(ellipse at 50% 20%, rgba(139,69,19,0.15), transparent 70%);
+      border: 1px solid rgba(139,69,19,0.1);
       border-radius: 50%;
     }
 
-    /* Left testicle */
-    .varla {
+    /* Balls */
+    .ball {
       position: absolute;
-      bottom: 22px;
-      left: 95px;
-      width: 52px;
-      height: 40px;
-      background: radial-gradient(ellipse at 40% 30%, #f0c8a8, #c4865a 45%, #8b4513 80%, #5a2d0e 100%);
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       box-shadow:
-        0 6px 18px rgba(139,69,19,0.5),
-        inset 0 -4px 10px rgba(0,0,0,0.3),
-        0 0 25px rgba(139,69,19,0.15);
-      z-index: 10;
-      animation: retract 5s ease-in-out infinite;
-      transition: filter 0.3s;
+        0 8px 25px rgba(0,0,0,0.6),
+        inset 0 -5px 12px rgba(0,0,0,0.4);
+      z-index: 20;
+      transition: all 0.1s;
     }
 
-    .varla::after {
+    .ball::after {
       content: '';
       position: absolute;
-      top: 6px;
-      left: 12px;
-      width: 15px;
-      height: 10px;
-      background: rgba(255,255,255,0.25);
+      width: 18px;
+      height: 12px;
+      background: rgba(255,255,255,0.2);
       border-radius: 50%;
+      top: 12px;
+      left: 14px;
     }
 
-    .varla-label {
+    .ball-left {
+      bottom: 55px;
+      left: 130px;
+      background: radial-gradient(circle at 40% 35%, #e8c8a8, #c48a5a 40%, #9b5520 70%, #6a3208 100%);
+      animation: retractLeft 5s ease-in-out infinite;
+    }
+
+    .ball-right {
+      bottom: 55px;
+      right: 130px;
+      background: radial-gradient(circle at 55% 35%, #e8c8a8, #c48a5a 40%, #9b5520 70%, #6a3208 100%);
+    }
+
+    .ball-label {
       position: absolute;
-      bottom: -18px;
-      left: 95px;
-      width: 52px;
+      bottom: 30px;
+      width: 55px;
       text-align: center;
-      font-size: 0.5rem;
-      color: rgba(218,165,32,0.8);
-      letter-spacing: 0.15em;
-      z-index: 10;
-      transform: translateY(0);
-      animation: labelPulse 5s ease-in-out infinite;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #daa520;
+      letter-spacing: 0.1em;
+      z-index: 20;
     }
 
-    @keyframes labelPulse {
-      0%, 10%, 90%, 100% { opacity: 0.6; }
+    .ball-label-left {
+      left: 130px;
+      animation: labelFade 5s ease-in-out infinite;
+    }
+
+    .ball-label-right {
+      right: 130px;
+    }
+
+    @keyframes labelFade {
+      0%, 10%, 85%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
 
-    /* Right testicle — stationary */
-    .varla-right {
+    /* Cord/trace line */
+    .cord {
       position: absolute;
-      bottom: 20px;
-      right: 95px;
-      width: 48px;
-      height: 37px;
-      background: radial-gradient(ellipse at 55% 30%, #f0c8a8, #c4865a 45%, #8b4513 80%, #5a2d0e 100%);
-      border-radius: 50%;
-      box-shadow:
-        0 6px 18px rgba(139,69,19,0.5),
-        inset 0 -4px 10px rgba(0,0,0,0.3),
-        0 0 25px rgba(139,69,19,0.15);
-      z-index: 10;
+      bottom: 110px;
+      left: 157px;
+      width: 3px;
+      height: 0;
+      background: linear-gradient(to top,
+        rgba(180,140,110,0.6),
+        rgba(180,140,110,0.3),
+        transparent
+      );
+      border-radius: 1px;
+      z-index: 15;
+      transform-origin: bottom;
+      animation: cordTrace 5s ease-in-out infinite;
     }
 
-    .varla-right::after {
-      content: '';
-      position: absolute;
-      top: 6px;
-      right: 10px;
-      width: 14px;
-      height: 9px;
-      background: rgba(255,255,255,0.25);
-      border-radius: 50%;
+    @keyframes cordTrace {
+      0%, 8% { height: 0; opacity: 0; }
+      15% { height: 20px; opacity: 0.5; }
+      30% { height: 35px; opacity: 0.8; }
+      45% { height: 50px; opacity: 0.6; }
+      50%, 100% { height: 0; opacity: 0; }
     }
 
-    .varla-right-label {
-      position: absolute;
-      bottom: -18px;
-      right: 95px;
-      width: 48px;
-      text-align: center;
-      font-size: 0.5rem;
-      color: rgba(218,165,32,0.6);
-      letter-spacing: 0.1em;
-      z-index: 10;
-    }
-
-    @keyframes retract {
+    @keyframes retractLeft {
       0%, 8% {
-        bottom: 22px;
+        bottom: 55px;
+        transform: scale(1) translateY(0);
         opacity: 1;
-        transform: scale(1) rotate(0deg);
-        filter: brightness(1);
       }
-      18% {
-        bottom: 38px;
-        opacity: 0.95;
-        transform: scale(0.9) rotate(-12deg);
-        filter: brightness(0.95);
+      15% {
+        bottom: 70px;
+        transform: scale(0.9) translateY(-5px);
+        opacity: 0.9;
       }
-      30% {
-        bottom: 58px;
-        opacity: 0.7;
-        transform: scale(0.65) rotate(-25deg);
-        filter: brightness(0.8);
+      28% {
+        bottom: 90px;
+        transform: scale(0.7) translateY(-10px);
+        opacity: 0.6;
       }
-      42% {
-        bottom: 72px;
-        opacity: 0.3;
-        transform: scale(0.35) rotate(-40deg);
-        filter: brightness(0.5);
+      40% {
+        bottom: 110px;
+        transform: scale(0.4) translateY(-15px);
+        opacity: 0.25;
       }
-      50% {
-        bottom: 82px;
+      48% {
+        bottom: 120px;
+        transform: scale(0.15);
         opacity: 0;
-        transform: scale(0.1) rotate(-55deg);
-        filter: brightness(0.2);
       }
-      52%, 78% {
-        bottom: 82px;
+      50%, 78% {
+        bottom: 120px;
+        transform: scale(0.15);
         opacity: 0;
-        transform: scale(0.1) rotate(-55deg);
-        filter: brightness(0.2);
       }
       88% {
-        bottom: 40px;
+        bottom: 70px;
+        transform: scale(0.7);
         opacity: 0.5;
-        transform: scale(0.75) rotate(-15deg);
-        filter: brightness(0.8);
       }
       95% {
-        bottom: 28px;
+        bottom: 58px;
+        transform: scale(0.9);
         opacity: 0.9;
-        transform: scale(0.95) rotate(-5deg);
-        filter: brightness(0.95);
       }
       100% {
-        bottom: 22px;
+        bottom: 55px;
+        transform: scale(1) translateY(0);
         opacity: 1;
-        transform: scale(1) rotate(0deg);
-        filter: brightness(1);
       }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .status-text {
-      margin-top: 1.5rem;
-      font-size: 1rem;
+    /* Status indicator */
+    .status-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1.2rem;
+      background: rgba(139,69,19,0.1);
+      border: 1px solid rgba(139,69,19,0.2);
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      animation: fadeUp 2.5s ease-out;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #daa520;
+      animation: statusBlink 1s infinite;
+    }
+
+    @keyframes statusBlink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 6px #daa520; }
+      50% { opacity: 0.3; box-shadow: none; }
+    }
+
+    .status-label {
+      font-size: 0.75rem;
       color: #c4956a;
-      opacity: 0.85;
-      animation: fadeIn 2s ease-in;
+      letter-spacing: 0.05em;
     }
 
-    .status-text span {
-      animation: dotBlink 1.5s infinite;
-    }
-
-    @keyframes dotBlink {
-      0%, 100% { opacity: 1; }
-      33% { opacity: 0.2; }
-      66% { opacity: 0.6; }
-    }
-
+    /* Explanation */
     .explanation {
-      margin-top: 0.8rem;
-      font-size: 0.7rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
       color: #8b7355;
-      max-width: 420px;
-      line-height: 1.7;
-      animation: fadeIn 3s ease-in;
+      max-width: 500px;
+      line-height: 1.8;
+      animation: fadeUp 3s ease-out;
     }
 
     .explanation strong {
       color: #daa520;
     }
 
+    .explanation .red {
+      color: #c0392b;
+      font-weight: 700;
+    }
+
+    /* Footer */
     .footer {
-      margin-top: 2.5rem;
+      margin-top: 2rem;
       font-size: 0.55rem;
-      color: #5a4a30;
+      color: #4a3a2a;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      animation: fadeIn 4s ease-in;
+      animation: fadeUp 3.5s ease-out;
     }
 
     .footer a {
       color: #6a5a40;
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.2s;
     }
 
-    .footer a:hover {
-      color: #daa520;
+    .footer a:hover { color: #daa520; }
+
+    /* Particles falling */
+    .rain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    @media (max-width: 500px) {
-      .title { font-size: 2rem; }
-      .canvas-wrapper { width: 320px; height: 360px; }
-      .varla { left: 65px; }
-      .varla-right { right: 65px; }
-      .varla-label { left: 65px; }
-      .varla-right-label { right: 65px; }
+    .drop {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(139,69,19,0.15);
+      border-radius: 50%;
+      animation: dropFall linear infinite;
+    }
+
+    @keyframes dropFall {
+      0% { transform: translateY(-10px); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    @media (max-width: 550px) {
+      .scene { width: 340px; height: 300px; transform: scale(0.85); }
+      .hero-title { font-size: 2.2rem; }
+      .explanation { font-size: 0.7rem; padding: 0 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Floating particles -->
-  <div class="particles" id="particles"></div>
+  <div class="ambient"></div>
+
+  <div class="rain" id="rain"></div>
 
   <div class="container">
-    <div class="title-block">
-      <h1 class="title">Ľavé Varla</h1>
-      <p class="title-accent">— anatomická štúdia —</p>
-      <p class="matus-quote">Keď <em>Matúš</em> ide o <em>business</em></p>
-    </div>
+    <div class="hero-label">Anatomická štúdia</div>
+    <h1 class="hero-title">Ľavé Varla</h1>
+    <p class="hero-subtitle">Čo sa stane, keď <strong>Matúš</strong> ide o <strong>business</strong></p>
 
-    <div class="canvas-wrapper">
-      <div class="body-silhouette">
-        <div class="body-head"></div>
+    <div class="scene">
+      <div class="torso">
+        <div class="torso-lines"></div>
       </div>
+      <div class="pelvis"></div>
 
-      <div class="cavity-glow"></div>
-      <div class="cavity" id="cavity">
+      <div class="cavity-zone">
+        <div class="cavity-hole"></div>
         <div class="cavity-label">brušná dutina</div>
       </div>
 
-      <div class="scrotum"></div>
+      <div class="sack"></div>
 
-      <div class="varla" id="varla"></div>
-      <div class="varla-label">Matúš</div>
+      <div class="cord"></div>
 
-      <div class="varla-right"></div>
-      <div class="varla-right-label">Knoty</div>
+      <div class="ball ball-left"></div>
+      <div class="ball ball-right"></div>
+
+      <div class="ball-label ball-label-left">MATÚŠ</div>
+      <div class="ball-label ball-label-right">KNOTY</div>
     </div>
 
-    <p class="status-text">Prebieha retrakcia<span>...</span></p>
+    <div class="status-bar">
+      <div class="status-dot"></div>
+      <span class="status-label">Prebieha retrakcia...</span>
+    </div>
 
     <p class="explanation">
-      Pri akomkoľvek náznaku <strong>zodpovednosti</strong>, <strong>deadlinu</strong> alebo <strong>business príležitosti</strong>
-      sa ľavé varla (Matúš) okamžite sťahuje do bezpečia brušnej dutiny.
-      Pravé varla (Knoty) zostáva na mieste a čaká.
+      Pri slove <strong>"deadline"</strong>, <strong>"zodpovednosť"</strong> alebo <strong>"business plán"</strong>
+      sa ľavé varla <span class="red">okamžite sťahuje</span> do bezpečia brušnej dutiny.
+      Pravé varla (Knoty) <strong>zostáva</strong> — a čaká.
+      Cyklus sa opakuje <strong>každých 5 sekúnd</strong>. Presne ako v reálnom živote.
     </p>
 
     <div class="footer">
-      <a href="https://github.com/Knoty92/lave-varla">repo</a> &nbsp;·&nbsp;
+      <a href="https://github.com/Knoty92/lave-varla">github.com/Knoty92/lave-varla</a>
+      &nbsp;·&nbsp;
       Molestermatej Laboratories &copy; 2026
     </div>
   </div>
 
   <script>
-    // Generate floating particles
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 25; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
-      p.style.width = (Math.random() * 4 + 1) + 'px';
-      p.style.height = p.style.width;
-      p.style.animationDelay = Math.random() * 8 + 's';
-      p.style.animationDuration = (Math.random() * 8 + 5) + 's';
-      particlesContainer.appendChild(p);
+    // Rain particles
+    const rain = document.getElementById('rain');
+    for (let i = 0; i < 40; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'drop';
+      drop.style.left = Math.random() * 100 + '%';
+      drop.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      drop.style.animationDelay = Math.random() * 8 + 's';
+      rain.appendChild(drop);
     }
-
-    // Pulse cavity when varla retracts
-    const cavity = document.getElementById('cavity');
-    setInterval(() => {
-      cavity.classList.add('active');
-      setTimeout(() => cavity.classList.remove('active'), 1800);
-    }, 5000);
   </script>
 </body>
 </html>
